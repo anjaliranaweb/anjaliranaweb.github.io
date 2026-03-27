@@ -7,15 +7,62 @@ import { SITE_TITLE } from '../consts';
 
 <!doctype html>
 <html lang="en">
-<head>
-<BaseHead title={`Research | ${SITE_TITLE}`} description="Research areas and projects" />
-</head>
-<body>
-<Header />
-<main>
-<h1>Research</h1>
-<p>Research content coming soon.</p>
-</main>
-<Footer />
-</body>
+	<head>
+		<BaseHead title={`Research | ${SITE_TITLE}`} description="Research areas and projects by Dr. Anjali Rana" />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<section class="hero">
+				<h1>Research</h1>
+				<p class="tagline">Exploring host-microbe interactions through genomics</p>
+			</section>
+
+			<section class="content">
+				<p>Research content coming soon.</p>
+			</section>
+		</main>
+		<Footer />
+	</body>
 </html>
+
+<style>
+	main {
+		width: 720px;
+		max-width: calc(100% - 2em);
+	}
+
+	.hero {
+		text-align: center;
+		padding: 2rem 0 1rem;
+		border-bottom: 1px solid rgb(var(--gray-light));
+		margin-bottom: 2rem;
+	}
+
+	.hero h1 {
+		font-size: 2.5rem;
+		color: var(--accent-dark);
+		margin-bottom: 0.5rem;
+	}
+
+	.tagline {
+		font-size: 1.1rem;
+		color: rgb(var(--gray));
+		margin: 0;
+	}
+
+	.content {
+		padding: 1rem 0;
+	}
+
+	.content p {
+		color: rgb(var(--gray-dark));
+		line-height: 1.8;
+	}
+
+	@media (max-width: 600px) {
+		.hero h1 {
+			font-size: 2rem;
+		}
+	}
+</style>

@@ -1,62 +1,80 @@
-# Astro Starter Kit: Blog
+# Dr. Anjali Rana - Research Portfolio Website
 
-```sh
-npm create astro@latest -- --template blog
+A personal research portfolio and blog website for Dr. Anjali Rana, a researcher specializing in Evolutionary Genetics, Genomics & Microbiome studies.
+
+## About the Website
+
+This website showcases:
+- **Research Focus**: Host-microbe interactions, genome assembly, and microbiome studies
+- **Blog**: Articles on molecular biology protocols, microbiome analysis workflows, R & bioinformatics guides, and PhD guidance
+- **Resources**: Educational content for students and researchers in bioinformatics
+
+## Tech Stack
+
+- **Frontend**: [Astro](https://astro.build) - Static site generator
+- **CMS**: [Sanity.io](https://sanity.io) - Headless CMS for blog content
+- **Styling**: Scoped CSS with Astro components
+
+## Project Structure
+
 ```
-
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-Features:
-
-- ✅ Minimal styling (make it your own!)
-- ✅ 100/100 Lighthouse performance
-- ✅ SEO-friendly with canonical URLs and Open Graph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-- ✅ Markdown & MDX support
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-├── public/
 ├── src/
-│   ├── components/
-│   ├── content/
-│   ├── layouts/
-│   └── pages/
-├── astro.config.mjs
-├── README.md
-├── package.json
-└── tsconfig.json
+│   ├── components/     # Reusable Astro components
+│   ├── layouts/        # Page layouts
+│   ├── pages/          # File-based routing
+│   └── styles/         # Global CSS
+├── docs/               # Documentation
+│   ├── sanity-blog-guide.md    # How to publish blog posts
+│   ├── markdown-style-guide.md # Markdown formatting reference
+│   └── using-mdx.mdx           # MDX usage guide
+├── website-cms/        # Sanity Studio (CMS)
+└── public/             # Static assets
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Getting Started
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+### Prerequisites
+- Node.js >= 22.12.0
 
-The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
+### Development
 
-Any static assets, like images, can be placed in the `public/` directory.
+```bash
+# Install dependencies
+npm install
 
-## 🧞 Commands
+# Start development server
+npm run dev
+```
 
-All commands are run from the root of the project, from a terminal:
+Visit `http://localhost:4321` to view the site.
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+### Build for Production
 
-## 👀 Want to learn more?
+```bash
+npm run build
+npm run preview  # Preview the production build
+```
 
-Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## Content Management
 
-## Credit
+Blog posts are managed through Sanity Studio. See [`docs/sanity-blog-guide.md`](docs/sanity-blog-guide.md) for detailed instructions on creating and publishing posts.
 
-This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
+### Running Sanity Studio Locally
+
+```bash
+cd website-cms
+npm install
+npm run dev
+```
+
+Visit `http://localhost:3333` to access the studio.
+
+## Documentation
+
+- [Sanity Blog Guide](docs/sanity-blog-guide.md) - Step-by-step guide to publishing posts
+- [Markdown Style Guide](docs/markdown-style-guide.md) - Markdown formatting reference
+- [Using MDX](docs/using-mdx.mdx) - MDX components and usage
+
+## License
+
+All rights reserved © Dr. Anjali Rana

@@ -1,0 +1,276 @@
+---
+import { sanityClient } from "sanity:client";
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import Header from '../../components/Header.astro';
+import { SITE_TITLE } from '../../consts';
+
+export async function getStaticPaths() {
+const publications = await sanityClient.fetch(`
+*[_type == "publication" && defined(slug.current)] {
+"slug": slug.current
+}
+`);
+return publications.map((pub: { slug: string }) => ({
+params: { slug: pub.slug },
+}));
+}
+
+const { slug } = Astro.params;
+
+interface Publication {
+_id: string;
+title: string;
+slug: { current: string };
+publishedAt: string;
+contributors?: string[];
+tags?: string[];
+abstract?: string;
+pdfUrl?: string;
+journal?: string;
+doi?: string;
+}
+
+const publication: Publication | null = await sanityClient.fetch(`
+*[_type == "publication" && slug.current == $slug][0] {
+_id,
+title,
+slug,
+publishedAt,
+contributors,
+tags,
+abstract,
+pdfUrl,
+journal,
+doi
+}
+`, { slug });
+
+if (!publication) {
+return Astro.redirect('/404');
+}
+
+function formatDate(dateStr: string): string {
+const date = new Date(dateStr);
+return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+}
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+<BaseHead title={`${publication.title} | ${SITE_TITLE}`} description={publication.abstract || publication.title} />
+</head>
+<body>
+<Header />
+<main>
+<article class="publication">
+<header class="publication-header">
+<a href="/publications" class="back-link">&larr; Back to Publications</a>
+<h1>{publication.title}</h1>
+{publication.journal && <p class="journal">{publication.journal}</p>}
+
+{publication.contributors && publication.contributors.length > 0 && (
+<p class="contributors">
+<strong>Authors:</strong> {publication.contributors.join(', ')}
+</p>
+)}
+
+<p class="date">
+<strong>Published:</strong> {formatDate(publication.publishedAt)}
+</p>
+
+{publication.doi && (
+<p class="doi">
+<strong>DOI:</strong>{' '}
+<a href={`https://doi.org/${publication.doi}`} target="_blank" rel="noopener noreferrer">
+{publication.doi}
+</a>
+</p>
+)}
+</header>
+
+{publication.tags && publication.tags.length > 0 && (
+<div class="tags">
+{publication.tags.map((tag) => (
+<span class="tag">{tag}</span>
+))}
+</div>
+)}
+
+{publication.abstract && (
+<section class="abstract-section">
+<h2>Abstract</h2>
+<p class="abstract">{publication.abstract}</p>
+</section>
+)}
+
+<div class="actions">
+{publication.pdfUrl && (
+<a href={publication.pdfUrl} class="btn btn-pdf" target="_blank" rel="noopener noreferrer">
+<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 2l5 5h-5V4zm-3 9h4v2h-4v-2zm0 3h4v2h-4v-2zm-2-3H7v-2h1v2zm0 3H7v-2h1v2zm7-3h1v2h-1v-2zm0 3h1v2h-1v-2z"/>
+</svg>
+Download PDF
+</a>
+)}
+{publication.doi && (
+<a href={`https://doi.org/${publication.doi}`} class="btn btn-doi" target="_blank" rel="noopener noreferrer">
+View on Publisher Site
+</a>
+)}
+</div>
+</article>
+</main>
+<Footer />
+</body>
+</html>
+
+<style>
+main {
+width: 800px;
+max-width: calc(100% - 2em);
+}
+
+.publication {
+padding: 1rem 0 2rem;
+}
+
+.back-link {
+display: inline-block;
+font-size: 0.9rem;
+color: var(--accent);
+text-decoration: none;
+margin-bottom: 1.5rem;
+transition: color 0.2s ease;
+}
+
+.back-link:hover {
+color: var(--accent-dark);
+}
+
+.publication-header {
+border-bottom: 1px solid rgb(var(--gray-light));
+padding-bottom: 1.5rem;
+margin-bottom: 1.5rem;
+}
+
+.publication-header h1 {
+font-size: 2rem;
+color: rgb(var(--gray-dark));
+line-height: 1.3;
+margin: 0 0 0.75rem;
+}
+
+.journal {
+font-size: 1.1rem;
+color: var(--accent-dark);
+font-style: italic;
+margin: 0 0 1rem;
+}
+
+.contributors,
+.date,
+.doi {
+font-size: 0.95rem;
+color: rgb(var(--gray-dark));
+margin: 0 0 0.5rem;
+line-height: 1.5;
+}
+
+.doi a {
+color: var(--accent);
+text-decoration: none;
+}
+
+.doi a:hover {
+text-decoration: underline;
+}
+
+.tags {
+display: flex;
+flex-wrap: wrap;
+gap: 0.5rem;
+margin-bottom: 2rem;
+}
+
+.tag {
+font-size: 0.8rem;
+padding: 0.3rem 0.85rem;
+background: rgba(13, 148, 136, 0.1);
+color: var(--accent-dark);
+border-radius: 20px;
+}
+
+.abstract-section {
+margin-bottom: 2rem;
+}
+
+.abstract-section h2 {
+font-size: 1.25rem;
+color: var(--accent-dark);
+margin: 0 0 1rem;
+padding-bottom: 0.5rem;
+border-bottom: 2px solid rgb(var(--gray-light));
+}
+
+.abstract {
+font-size: 1rem;
+line-height: 1.8;
+color: rgb(var(--gray-dark));
+margin: 0;
+text-align: justify;
+}
+
+.actions {
+display: flex;
+gap: 1rem;
+flex-wrap: wrap;
+}
+
+.btn {
+display: inline-flex;
+align-items: center;
+gap: 0.5rem;
+font-size: 1rem;
+font-weight: 500;
+padding: 0.75rem 1.5rem;
+border-radius: 8px;
+text-decoration: none;
+transition: all 0.2s ease;
+}
+
+.btn-pdf {
+background: #dc2626;
+color: white;
+}
+
+.btn-pdf:hover {
+background: #b91c1c;
+transform: translateY(-2px);
+}
+
+.btn-doi {
+background: rgb(var(--gray-dark));
+color: white;
+}
+
+.btn-doi:hover {
+background: rgb(var(--black));
+transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+.publication-header h1 {
+font-size: 1.5rem;
+}
+
+.actions {
+flex-direction: column;
+}
+
+.btn {
+justify-content: center;
+}
+}
+</style>

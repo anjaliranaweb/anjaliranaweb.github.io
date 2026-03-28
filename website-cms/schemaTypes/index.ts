@@ -1,1 +1,3 @@
-export const schemaTypes = []
+import publication from './publication'
+
+export const schemaTypes = [publication]

@@ -4,6 +4,11 @@
 import '../styles/global.css';
 import { SITE_TITLE } from '../consts';
 
+// Preload research images
+import microbiomeImg from '../assets/research/Research_Microbiome.png';
+import genomicsImg from '../assets/research/Research_Genomics.png';
+import microbialEcologyImg from '../assets/research/Research_Microbiology.png';
+
 interface Props {
 	title: string;
 	description: string;
@@ -32,6 +37,11 @@ const { title, description, image } = Astro.props;
 <!-- Font preloads -->
 <link rel="preload" href="/fonts/atkinson-regular.woff" as="font" type="font/woff" crossorigin />
 <link rel="preload" href="/fonts/atkinson-bold.woff" as="font" type="font/woff" crossorigin />
+
+<!-- Research images preload -->
+<link rel="preload" href={microbiomeImg.src} as="image" type="image/png" />
+<link rel="preload" href={genomicsImg.src} as="image" type="image/png" />
+<link rel="preload" href={microbialEcologyImg.src} as="image" type="image/png" />
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />

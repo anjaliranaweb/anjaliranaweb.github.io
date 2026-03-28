@@ -1,68 +1,192 @@
 ---
+import { Image } from 'astro:assets';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import { SITE_TITLE } from '../consts';
+
+import microbiomeImg from '../assets/research/Research_Microbiome.png';
+import genomicsImg from '../assets/research/Research_Genomics.png';
+import microbialEcologyImg from '../assets/research/Research_Microbiology.png';
+
+const researchAreas = [
+{
+id: 'microbiome',
+title: 'Microbiome',
+image: microbiomeImg,
+description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
+},
+{
+id: 'genomics',
+title: 'Genomics',
+image: genomicsImg,
+description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
+},
+{
+id: 'microbial-ecology',
+title: 'Microbial Ecology',
+image: microbialEcologyImg,
+description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
+},
+];
 ---
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<BaseHead title={`Research | ${SITE_TITLE}`} description="Research areas and projects by Dr. Anjali Rana" />
-	</head>
-	<body>
-		<Header />
-		<main>
-			<section class="hero">
-				<h1>Research</h1>
-				<p class="tagline">Exploring host-microbe interactions through genomics</p>
-			</section>
+<head>
+<BaseHead title={`Research | ${SITE_TITLE}`} description="Research areas and projects by Dr. Anjali Rana" />
+</head>
+<body>
+<Header />
+<main>
+<section class="hero">
+<h1>Research</h1>
+<p class="tagline">Exploring host-microbe interactions through genomics</p>
+</section>
 
-			<section class="content">
-				<p>Research content coming soon.</p>
-			</section>
-		</main>
-		<Footer />
-	</body>
+<section class="intro">
+<p>
+During my PhD, I studied the role of various microbes, including bacteria, fungi, and viruses, in
+the ecology and evolution of insects during my PhD. I have investigated the different factors
+that contribute to the microbiome (bacterial community), mycobiome (fungal community), and
+virome (viral community) of the jewel wasp, Nasonia. Therefore, I first characterized the
+different microbial communities of these insects and then studied host-symbiont-microbiome
+interactions. Additionally, I assembled the genome of one of the youngest Nasonia species, N.
+oneida, and performed comparative genomics with other Nasonia species and other
+hymenopteran insects.
+</p>
+<p>
+I have also worked with social insects, including highly eusocial and primitively eusocial species,
+such as termites (Odontotermes obesus) and paper wasps (Polistes spp.), which have shaped my
+perspective on host biology across different levels of social organization.
+</p>
+</section>
+
+<section class="research-areas">
+{researchAreas.map((area, index) => (
+<article class={`research-card ${index % 2 === 1 ? 'reverse' : ''}`} id={area.id}>
+<div class="research-image">
+<Image src={area.image} alt={area.title} width={400} height={250} />
+</div>
+<div class="research-content">
+<h2>{area.title}</h2>
+<p>{area.description}</p>
+</div>
+</article>
+))}
+</section>
+</main>
+<Footer />
+</body>
 </html>
 
 <style>
-	main {
-		width: 720px;
-		max-width: calc(100% - 2em);
-	}
+main {
+width: 1100px;
+max-width: calc(100% - 2em);
+}
 
-	.hero {
-		text-align: center;
-		padding: 2rem 0 1rem;
-		border-bottom: 1px solid rgb(var(--gray-light));
-		margin-bottom: 2rem;
-	}
+.hero {
+text-align: center;
+padding: 2rem 0 1rem;
+border-bottom: 1px solid rgb(var(--gray-light));
+margin-bottom: 2.5rem;
+}
 
-	.hero h1 {
-		font-size: 2.5rem;
-		color: var(--accent-dark);
-		margin-bottom: 0.5rem;
-	}
+.hero h1 {
+font-size: 2.5rem;
+color: var(--accent-dark);
+margin-bottom: 0.5rem;
+}
 
-	.tagline {
-		font-size: 1.1rem;
-		color: rgb(var(--gray));
-		margin: 0;
-	}
+.tagline {
+font-size: 1.1rem;
+color: rgb(var(--gray));
+margin: 0;
+}
 
-	.content {
-		padding: 1rem 0;
-	}
+.intro {
+max-width: 800px;
+margin: 0 auto 2.5rem;
+padding: 0 1rem;
+}
 
-	.content p {
-		color: rgb(var(--gray-dark));
-		line-height: 1.8;
-	}
+.intro p {
+font-size: 1rem;
+line-height: 1.8;
+color: rgb(var(--gray-dark));
+text-align: center;
+}
 
-	@media (max-width: 600px) {
-		.hero h1 {
-			font-size: 2rem;
-		}
-	}
+.research-areas {
+display: flex;
+flex-direction: column;
+gap: 3rem;
+padding-bottom: 2rem;
+}
+
+.research-card {
+display: flex;
+gap: 2rem;
+align-items: center;
+padding: 1.5rem;
+background: #fff;
+border: 1px solid rgb(var(--gray-light));
+border-radius: 16px;
+box-shadow: 0 2px 12px rgba(var(--gray), 10%);
+}
+
+.research-card.reverse {
+flex-direction: row-reverse;
+}
+
+.research-image {
+flex-shrink: 0;
+width: 400px;
+border-radius: 12px;
+overflow: hidden;
+}
+
+.research-image img {
+width: 100%;
+height: auto;
+display: block;
+}
+
+.research-content {
+flex: 1;
+}
+
+.research-content h2 {
+font-size: 1.75rem;
+color: var(--accent-dark);
+margin: 0 0 1rem;
+}
+
+.research-content p {
+color: rgb(var(--gray-dark));
+line-height: 1.8;
+margin: 0;
+}
+
+@media (max-width: 900px) {
+.research-card,
+.research-card.reverse {
+flex-direction: column;
+}
+
+.research-image {
+width: 100%;
+}
+
+.research-content h2 {
+font-size: 1.5rem;
+}
+}
+
+@media (max-width: 600px) {
+.hero h1 {
+font-size: 2rem;
+}
+}
 </style>

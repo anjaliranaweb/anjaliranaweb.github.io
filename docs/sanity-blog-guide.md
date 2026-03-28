@@ -1,6 +1,6 @@
-# How to Upload Blog Posts on Sanity.io
+# How to Upload Publications on Sanity.io
 
-This guide explains how to create and publish blog posts using Sanity Studio, which will automatically appear on the website.
+This guide explains how to add new academic publications to your website using Sanity Studio.
 
 ## Prerequisites
 
@@ -24,92 +24,113 @@ Navigate to your deployed Sanity Studio URL (e.g., `https://your-studio.sanity.s
 1. Click **Log in** on the Sanity Studio homepage
 2. Sign in with your Sanity account (Google, GitHub, or email)
 
-## Step 3: Create a New Blog Post
+## Step 3: Create a New Publication
 
-1. In the left sidebar, click on **Post** (or your blog post document type)
-2. Click the **+ Create** button (or the pencil icon) to create a new post
+1. In the left sidebar, click on **Publication**
+2. Click the **+ Create** button to create a new publication
 
-## Step 4: Fill in the Post Details
-
-Complete the following fields:
+## Step 4: Fill in the Publication Details
 
 ### Required Fields
 
 | Field | Description |
 |-------|-------------|
-| **Title** | The headline of your blog post |
-| **Slug** | URL-friendly identifier (e.g., `my-first-post`). Click "Generate" to auto-create from title |
-| **Description** | A brief summary for SEO and previews (1-2 sentences) |
-| **Published Date** | When the post should be dated |
+| **Title** | The title of your publication |
+| **Slug** | URL-friendly identifier (click "Generate" to auto-create from title) |
+| **Published At** | Publication date |
 
 ### Optional Fields
 
 | Field | Description |
 |-------|-------------|
-| **Hero Image** | Featured image displayed at the top of the post |
-| **Body** | The main content of your post (supports rich text, images, code blocks) |
+| **Contributors** | List of author names (add each separately) |
+| **Tags** | Keywords/topics for categorization |
+| **Abstract** | Full abstract text |
+| **PDF URL** | Direct link to download the PDF |
+| **Journal** | Name of the journal/conference |
+| **DOI** | Digital Object Identifier (without https://doi.org/ prefix) |
 
-## Step 5: Write Your Content
+## Step 5: Adding Contributors
 
-The **Body** field uses Sanity's Portable Text editor:
+Contributors are stored as an array of text strings:
 
-- **Bold/Italic**: Select text and use the formatting toolbar
-- **Headings**: Use H2, H3, H4 for section headers
-- **Links**: Highlight text and click the link icon
-- **Images**: Click the image icon to upload or select from library
-- **Code blocks**: Use the code block option for technical content
-- **Lists**: Create bulleted or numbered lists
+1. Click the **+** button in the Contributors field
+2. Enter the author name (e.g., "Anjali Rana")
+3. Repeat for each co-author
+4. Drag to reorder authors as needed
 
-### Tips for Good Content
+## Step 6: Adding Tags
 
-- Use H2 (`##`) for main sections, H3 (`###`) for subsections
-- Keep paragraphs short and scannable
-- Add alt text to images for accessibility
-- Use code blocks for any code snippets
+Tags help categorize your publications:
 
-## Step 6: Preview Your Post
+1. Click in the Tags field
+2. Type a tag (e.g., "microbiome", "genomics")
+3. Press Enter or comma to add
+4. Add multiple tags as needed
 
-1. Click the **Preview** button in the top-right corner
-2. Review how your post will appear on the live site
-3. Make any necessary adjustments
+## Step 7: PDF and DOI Links
 
-## Step 7: Publish
+### PDF URL
+- Use a direct link to the PDF file
+- Can be from your institutional repository, ResearchGate, or cloud storage
+- Example: `https://your-repo.edu/papers/your-paper.pdf`
 
-1. When satisfied, click the **Publish** button
-2. Your post is now live and will appear on the website
+### DOI
+- Enter only the DOI identifier, NOT the full URL
+- Example: `10.1016/j.microbio.2024.001234`
+- The website will automatically link to `https://doi.org/your-doi`
 
-> **Note**: Changes may take a few minutes to appear on the live site due to CDN caching.
+## Step 8: Publish
 
-## Managing Existing Posts
+1. Review all content for accuracy
+2. Click **Publish** to make the publication live
+3. The website will automatically update (may take a few minutes for cache to clear)
 
-### Edit a Post
-1. Click on the post in the sidebar
+## How Publications Display
+
+Once published, your publication will appear:
+
+1. **On the Publications page** - with title, contributors, date, abstract preview, and tags
+2. **On its own detail page** - with full abstract and download/DOI buttons
+3. **In the RSS feed** - for readers using feed readers
+
+## Best Practices
+
+- **List all contributors** in the order they appear on the paper
+- **Use consistent tags** across publications (e.g., always "Microbiome" not sometimes "microbiome")
+- **Always include DOI** when available for citation purposes
+- **Set accurate publication dates** for proper chronological ordering
+
+## Managing Existing Publications
+
+### Edit a Publication
+1. Click on the publication in the sidebar
 2. Make your changes
 3. Click **Publish** to update
 
-### Unpublish a Post
-1. Open the post
+### Unpublish a Publication
+1. Open the publication
 2. Click the dropdown arrow next to "Publish"
 3. Select **Unpublish**
 
-### Delete a Post
-1. Open the post
+### Delete a Publication
+1. Open the publication
 2. Click the three-dot menu (⋮)
 3. Select **Delete**
 4. Confirm deletion
 
 ## Troubleshooting
 
-### Post not appearing on website?
-- Ensure the post is **Published** (not just saved as draft)
-- Check that all required fields are filled
+### Publication not appearing on website?
+- Ensure the publication is **Published** (not just saved as draft)
+- Check that Title, Slug, and Published At are filled
+- Verify the slug is unique
 - Wait a few minutes for CDN cache to refresh
-- Verify the `slug` field is set
 
-### Images not loading?
-- Check image file size (keep under 5MB)
-- Ensure image format is supported (JPG, PNG, WebP)
-- Verify the image was fully uploaded before publishing
+### PDF link not working?
+- Verify the URL is accessible (test in a new browser tab)
+- Ensure the URL points directly to the PDF, not a landing page
+- Check file permissions on the hosting service
 
 ### Need help?
 Contact the website administrator or check the [Sanity documentation](https://www.sanity.io/docs).

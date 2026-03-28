@@ -3,12 +3,14 @@ import { sanityClient } from 'sanity:client';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 
 export async function GET(context) {
-	const posts = await sanityClient.fetch(`
-		*[_type == "post" && defined(slug.current)] | order(publishedAt desc) {
+	const publications = await sanityClient.fetch(`
+		*[_type == "publication" && defined(slug.current)] | order(publishedAt desc) {
 			title,
 			"slug": slug.current,
 			publishedAt,
-			excerpt
+			abstract,
+			contributors,
+			journal
 		}
 	`);
 
@@ -16,11 +18,12 @@ export async function GET(context) {
 		title: SITE_TITLE,
 		description: SITE_DESCRIPTION,
 		site: context.site,
-		items: posts.map((post) => ({
-			title: post.title,
-			pubDate: post.publishedAt ? new Date(post.publishedAt) : new Date(),
-			description: post.excerpt || '',
-			link: `/blog/${post.slug}/`,
+		items: publications.map((pub) => ({
+			title: pub.title,
+			pubDate: pub.publishedAt ? new Date(pub.publishedAt) : new Date(),
+			description: pub.abstract || '',
+			author: pub.contributors ? pub.contributors.join(', ') : '',
+			link: `/publications/${pub.slug}/`,
 		})),
 	});
 }

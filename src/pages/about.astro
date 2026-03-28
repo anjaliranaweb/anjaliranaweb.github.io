@@ -3,6 +3,26 @@ import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import { SITE_TITLE } from '../consts';
+
+const molecularSkills = ['DNA/RNA Isolation', 'PCR & qPCR', 'NGS Library Prep', 'Illumina & Nanopore Sequencing', 'Microbial Culturing'];
+const computationalSkills = ['Genome Assembly', 'Microbiome Analysis', 'Transcriptome Analysis', 'Bioinformatics Pipelines'];
+
+const reviewer = ['Animal Microbiome', 'Microbial Ecology', 'Discover Developmental Biology'];
+
+const honors = [
+	{ title: 'ANRF International Travel Grant Award', event: 'ESEB2025', year: '2025' },
+	{ title: 'Best Poster Award', event: '26th Punjab Science Congress', year: '2023' },
+	{ title: 'Best Poster Award', event: 'International Conference on Antimicrobial Resistance and Microbiome', year: '2022' },
+	{ title: 'CSIR NET JRF', event: 'All India Rank 56', year: '2018' },
+];
+
+const memberships = [
+	'British Ecological Society (BES)',
+	'American Society of Microbiology (ASM)',
+	'European Society for Evolutionary Biology (ESEB)',
+	'Society for the Study of Evolution (SSE)',
+	'The Association for the Study of Animal Behaviour (ASAB)',
+];
 ---
 
 <!doctype html>
@@ -16,6 +36,12 @@ import { SITE_TITLE } from '../consts';
 			<section class="hero">
 				<h1>About Me</h1>
 				<p class="tagline">Researcher · Educator · Science Communicator</p>
+				<a href="/about/Anjali Rana CV.pdf" target="_blank" rel="noopener noreferrer" class="cv-btn">
+					<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+						<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/>
+					</svg>
+					View Full CV
+				</a>
 			</section>
 
 			<section class="content">
@@ -26,8 +52,52 @@ import { SITE_TITLE } from '../consts';
 
 				<h2>Research Focus</h2>
 				<p>
-					My research explores the intricate relationships between hosts and their microbial communities. I have extensive experience in genome assembly, microbiome analysis workflows, and developing R-based computational pipelines for biological data.
+					During my PhD, I studied the role of various microbes—bacteria, fungi, and viruses—in the ecology and evolution of insects. I investigated factors shaping the microbiome, mycobiome, and virome of the jewel wasp, <em>Nasonia</em>, characterizing microbial communities and studying host-symbiont-microbiome interactions. I also assembled the genome of <em>N. oneida</em> and performed comparative genomics across hymenopteran insects.
 				</p>
+
+				<h2>Education</h2>
+				<div class="subsection">
+					<p><strong>PhD in Evolutionary Genetics</strong></p>
+					<p class="indent">Indian Institute of Science Education and Research (IISER), Mohali</p>
+					<p class="indent"><em>Thesis: Disentangling a Holobiont: Role of microbes in the ecology and evolution of the jewel wasp, Nasonia</em></p>
+					<p class="indent muted">Thesis submitted October 2025, Expected Award February 2026</p>
+				</div>
+
+				<h2>Skills</h2>
+				<div class="skills-grid">
+					<div class="skill-column">
+						<p><strong>Molecular Techniques</strong></p>
+						<ul>
+							{molecularSkills.map((skill) => <li>{skill}</li>)}
+						</ul>
+					</div>
+					<div class="skill-column">
+						<p><strong>Computational</strong></p>
+						<ul>
+							{computationalSkills.map((skill) => <li>{skill}</li>)}
+						</ul>
+					</div>
+				</div>
+
+				<h2>Peer Reviewer</h2>
+				<p class="indent">
+					{reviewer.join(' · ')}
+				</p>
+
+				<h2>Honors, Grants & Fellowships</h2>
+				<div class="subsection">
+					{honors.map((honor) => (
+						<p class="honor-line">
+							<span class="year">{honor.year}</span>
+							<span>{honor.title} — {honor.event}</span>
+						</p>
+					))}
+				</div>
+
+				<h2>Scientific Memberships</h2>
+				<ul class="memberships-list">
+					{memberships.map((org) => <li>{org}</li>)}
+				</ul>
 
 				<h2>Beyond Research</h2>
 				<p>
@@ -52,8 +122,8 @@ import { SITE_TITLE } from '../consts';
 
 	.hero {
 		text-align: center;
-		padding: 2rem 0 1rem;
-		border-bottom: 1px solid rgb(var(--gray-light));
+		padding: 2rem 0 1.5rem;
+		border-bottom: 2px solid var(--accent);
 		margin-bottom: 2rem;
 	}
 
@@ -66,11 +136,33 @@ import { SITE_TITLE } from '../consts';
 	.tagline {
 		font-size: 1.1rem;
 		color: rgb(var(--gray));
-		margin: 0;
+		margin: 0 0 1.25rem;
+	}
+
+	.cv-btn {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.6rem 1.25rem;
+		background: var(--accent);
+		color: white;
+		text-decoration: none;
+		border-radius: 8px;
+		font-weight: 600;
+		font-size: 0.95rem;
+		transition: all 0.2s ease;
+	}
+
+	.cv-btn:hover {
+		background: var(--accent-dark);
+		transform: translateY(-2px);
+		box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3);
 	}
 
 	.content {
 		padding: 1rem 0;
+		max-width: 800px;
+		margin: 0 auto;
 	}
 
 	.content h2 {
@@ -78,7 +170,7 @@ import { SITE_TITLE } from '../consts';
 		color: var(--accent-dark);
 		margin: 2rem 0 0.75rem;
 		padding-bottom: 0.5rem;
-		border-bottom: 2px solid rgb(var(--gray-light));
+		border-bottom: 2px solid var(--accent);
 	}
 
 	.content h2:first-child {
@@ -88,11 +180,93 @@ import { SITE_TITLE } from '../consts';
 	.content p {
 		color: rgb(var(--gray-dark));
 		line-height: 1.8;
+		margin-bottom: 0.5rem;
+	}
+
+	.subsection {
+		padding-left: 1.5rem;
+	}
+
+	.subsection p {
+		margin-bottom: 0.35rem;
+	}
+
+	.indent {
+		padding-left: 1.5rem;
+	}
+
+	.muted {
+		color: rgb(var(--gray));
+		font-size: 0.9rem;
+	}
+
+	/* Skills Grid */
+	.skills-grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 2rem;
+		padding-left: 1.5rem;
+	}
+
+	.skill-column p {
+		margin-bottom: 0.5rem;
+	}
+
+	.skill-column ul {
+		list-style: disc;
+		padding-left: 1.25rem;
+		margin: 0;
+	}
+
+	.skill-column li {
+		font-size: 0.95rem;
+		color: rgb(var(--gray-dark));
+		padding: 0.2rem 0;
+	}
+
+	/* Honors */
+	.honor-line {
+		display: flex;
+		gap: 1rem;
+		align-items: baseline;
+	}
+
+	.honor-line .year {
+		font-weight: 600;
+		color: var(--accent-dark);
+		min-width: 3rem;
+	}
+
+	/* Memberships */
+	.memberships-list {
+		list-style: disc;
+		padding-left: 2.75rem;
+		margin: 0;
+	}
+
+	.memberships-list li {
+		font-size: 0.95rem;
+		color: rgb(var(--gray-dark));
+		padding: 0.2rem 0;
 	}
 
 	@media (max-width: 600px) {
 		.hero h1 {
 			font-size: 2rem;
+		}
+
+		.skills-grid {
+			grid-template-columns: 1fr;
+			gap: 1rem;
+		}
+
+		.honor-line {
+			flex-direction: column;
+			gap: 0.1rem;
+		}
+
+		.honor-line .year {
+			min-width: auto;
 		}
 	}
 </style>

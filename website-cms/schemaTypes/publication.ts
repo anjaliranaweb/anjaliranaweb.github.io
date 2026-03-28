@@ -28,6 +28,21 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'status',
+      title: 'Publication Status',
+      type: 'string',
+      options: {
+        list: [
+          {title: 'Published', value: 'published'},
+          {title: 'Under Review', value: 'under-review'},
+          {title: 'In Preparation', value: 'in-preparation'},
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'published',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: 'contributors',
       title: 'Contributors',
       type: 'array',
@@ -76,13 +91,20 @@ export default defineType({
       title: 'title',
       date: 'publishedAt',
       contributors: 'contributors',
+      status: 'status',
     },
     prepare(selection) {
-      const {title, date, contributors} = selection
+      const {title, date, contributors, status} = selection
       const authorList = contributors?.slice(0, 2).join(', ') || 'No authors'
+      const statusLabels: Record<string, string> = {
+        'published': '✓ Published',
+        'under-review': '⏳ Under Review',
+        'in-preparation': '📝 In Preparation',
+      }
+      const statusLabel = statusLabels[status] || ''
       return {
         title: title,
-        subtitle: `${date || 'No date'} • ${authorList}${contributors?.length > 2 ? '...' : ''}`,
+        subtitle: `${statusLabel} • ${date || 'No date'} • ${authorList}${contributors?.length > 2 ? '...' : ''}`,
       }
     },
   },

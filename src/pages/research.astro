@@ -89,7 +89,7 @@ max-width: calc(100% - 2em);
 .hero {
 text-align: center;
 padding: 2rem 0 1rem;
-border-bottom: 1px solid rgb(var(--gray-light));
+border-bottom: 2px solid var(--accent);
 margin-bottom: 2.5rem;
 }
 
@@ -134,6 +134,11 @@ background: #fff;
 border: 1px solid rgb(var(--gray-light));
 border-radius: 16px;
 box-shadow: 0 2px 12px rgba(var(--gray), 10%);
+transition: box-shadow 0.2s ease;
+}
+
+.research-card:hover {
+box-shadow: 0 4px 20px rgba(var(--gray), 20%);
 }
 
 .research-card.reverse {

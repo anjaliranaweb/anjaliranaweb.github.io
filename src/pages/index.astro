@@ -1,4 +1,5 @@
 ---
+import { sanityClient } from "sanity:client";
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
@@ -10,6 +11,72 @@ const tiles = [
 	{ emoji: '📊', title: 'R & Bioinformatics Guides', href: '/blog' },
 	{ emoji: '🎓', title: 'PhD Guidance & Resources', href: '/blog' },
 ];
+
+interface NewsEvent {
+	_id: string;
+	title: string;
+	year: number;
+	month: string;
+	eventType: string;
+	description?: string;
+	link?: string;
+}
+
+const newsEvents: NewsEvent[] = await sanityClient.fetch(`
+	*[_type == "newsEvent"] | order(year desc, month desc) {
+		_id,
+		title,
+		year,
+		month,
+		eventType,
+		description,
+		link
+	}
+`);
+
+const monthOrder: Record<string, number> = {
+	january: 1, february: 2, march: 3, april: 4, may: 5, june: 6,
+	july: 7, august: 8, september: 9, october: 10, november: 11, december: 12
+};
+
+const monthNames: Record<string, string> = {
+	january: 'January', february: 'February', march: 'March', april: 'April',
+	may: 'May', june: 'June', july: 'July', august: 'August',
+	september: 'September', october: 'October', november: 'November', december: 'December'
+};
+
+const eventTypeColors: Record<string, string> = {
+	conference: '#8b5cf6',
+	poster: '#f59e0b',
+	publication: '#10b981',
+	award: '#ec4899',
+	workshop: '#3b82f6',
+	general: '#6b7280',
+};
+
+const eventTypeLabels: Record<string, string> = {
+	conference: 'Conference',
+	poster: 'Poster Presentation',
+	publication: 'Publication Release',
+	award: 'Award',
+	workshop: 'Workshop',
+	general: 'News',
+};
+
+// Group events by year and month
+const groupedEvents = newsEvents.reduce((acc, event) => {
+	if (!acc[event.year]) {
+		acc[event.year] = {};
+	}
+	if (!acc[event.year][event.month]) {
+		acc[event.year][event.month] = [];
+	}
+	acc[event.year][event.month].push(event);
+	return acc;
+}, {} as Record<number, Record<string, NewsEvent[]>>);
+
+// Sort years descending
+const sortedYears = Object.keys(groupedEvents).map(Number).sort((a, b) => b - a);
 ---
 
 <!doctype html>
@@ -45,6 +112,50 @@ const tiles = [
 					))}
 				</div>
 			</section>
+
+			{sortedYears.length > 0 && (
+				<section class="news-events">
+					<h2>News & Events</h2>
+					<div class="timeline">
+						{sortedYears.map((year) => {
+							const months = Object.keys(groupedEvents[year])
+								.sort((a, b) => monthOrder[b] - monthOrder[a]);
+							return (
+								<div class="year-section">
+									<h3 class="year-heading">{year}</h3>
+									{months.map((month) => (
+										<div class="month-section">
+											<h4 class="month-heading">{monthNames[month]}</h4>
+											<ul class="events-list">
+												{groupedEvents[year][month].map((event) => (
+													<li class="event-item">
+														<span 
+															class="event-type-badge"
+															style={`background-color: ${eventTypeColors[event.eventType]}20; color: ${eventTypeColors[event.eventType]}; border-color: ${eventTypeColors[event.eventType]}`}
+														>
+															{eventTypeLabels[event.eventType]}
+														</span>
+														{event.link ? (
+															<a href={event.link} target="_blank" rel="noopener noreferrer" class="event-title">
+																{event.title}
+															</a>
+														) : (
+															<span class="event-title">{event.title}</span>
+														)}
+														{event.description && (
+															<p class="event-description">{event.description}</p>
+														)}
+													</li>
+												))}
+											</ul>
+										</div>
+									))}
+								</div>
+							);
+						})}
+					</div>
+				</section>
+			)}
 		</main>
 		<Footer />
 	</body>
@@ -59,7 +170,7 @@ const tiles = [
 	.hero {
 		text-align: center;
 		padding: 2rem 0 1rem;
-		border-bottom: 1px solid rgb(var(--gray-light));
+		border-bottom: 2px solid var(--accent);
 		margin-bottom: 2rem;
 	}
 
@@ -138,6 +249,105 @@ const tiles = [
 		color: var(--accent);
 	}
 
+	.news-events {
+		margin-top: 3rem;
+		margin-bottom: 2rem;
+	}
+
+	.news-events h2 {
+		text-align: center;
+		font-size: 1.5rem;
+		color: rgb(var(--black));
+		margin-bottom: 2rem;
+	}
+
+	.timeline {
+		max-width: 800px;
+		margin: 0 auto;
+	}
+
+	.year-section {
+		margin-bottom: 2rem;
+	}
+
+	.year-heading {
+		font-size: 1.5rem;
+		color: var(--accent-dark);
+		margin: 0 0 1rem;
+		padding-bottom: 0.5rem;
+		border-bottom: 2px solid var(--accent);
+	}
+
+	.month-section {
+		margin-left: 1rem;
+		margin-bottom: 1.5rem;
+	}
+
+	.month-heading {
+		font-size: 1.1rem;
+		color: rgb(var(--gray-dark));
+		margin: 0 0 0.75rem;
+		font-weight: 600;
+	}
+
+	.events-list {
+		list-style: none;
+		padding: 0;
+		margin: 0 0 0 1rem;
+	}
+
+	.event-item {
+		position: relative;
+		padding: 0.75rem 0 0.75rem 1.25rem;
+		border-left: 2px solid rgb(var(--gray-light));
+	}
+
+	.event-item::before {
+		content: '';
+		position: absolute;
+		left: -5px;
+		top: 1.1rem;
+		width: 8px;
+		height: 8px;
+		background: var(--accent);
+		border-radius: 50%;
+	}
+
+	.event-type-badge {
+		display: inline-block;
+		font-size: 0.7rem;
+		font-weight: 600;
+		padding: 0.2rem 0.5rem;
+		border-radius: 4px;
+		border: 1px solid;
+		margin-bottom: 0.35rem;
+		text-transform: uppercase;
+		letter-spacing: 0.025em;
+	}
+
+	.event-title {
+		display: block;
+		font-size: 0.95rem;
+		color: rgb(var(--gray-dark));
+		line-height: 1.5;
+	}
+
+	a.event-title {
+		text-decoration: none;
+		color: var(--accent-dark);
+	}
+
+	a.event-title:hover {
+		text-decoration: underline;
+	}
+
+	.event-description {
+		font-size: 0.85rem;
+		color: rgb(var(--gray));
+		margin: 0.35rem 0 0;
+		line-height: 1.5;
+	}
+
 	@media (max-width: 600px) {
 		.tiles {
 			grid-template-columns: 1fr;
@@ -149,6 +359,14 @@ const tiles = [
 
 		.tagline {
 			font-size: 1rem;
+		}
+
+		.month-section {
+			margin-left: 0.5rem;
+		}
+
+		.events-list {
+			margin-left: 0.5rem;
 		}
 	}
 </style>

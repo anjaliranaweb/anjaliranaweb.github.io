@@ -36,8 +36,8 @@ body {
 	margin: 0;
 	padding: 0;
 	text-align: left;
-	background: linear-gradient(var(--gray-gradient)) no-repeat;
-	background-size: 100% 600px;
+	background: linear-gradient(to bottom, #f0fdfa, #f5fafa 150px, #f8fafb 400px, #fafbfc);
+	background-attachment: fixed;
 	word-wrap: break-word;
 	overflow-wrap: break-word;
 	color: rgb(var(--gray-dark));
@@ -126,7 +126,7 @@ blockquote {
 }
 hr {
 	border: none;
-	border-top: 1px solid rgb(var(--gray-light));
+	border-top: 2px solid var(--accent);
 }
 @media (max-width: 720px) {
 	body {

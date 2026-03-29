@@ -3,6 +3,39 @@ import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import { SITE_TITLE } from '../consts';
+
+const sections = [
+	{ 
+		emoji: '🧬', 
+		title: 'Molecular Biology', 
+		href: '/protocols/molecular-biology',
+		description: 'DNA/RNA isolation, PCR, cloning, and other molecular techniques'
+	},
+	{ 
+		emoji: '🦠', 
+		title: 'Microbiome Analysis', 
+		href: '/protocols/microbiome-analysis',
+		description: '16S rRNA sequencing, metagenomics, and microbial community analysis'
+	},
+	{ 
+		emoji: '💻', 
+		title: 'Bioinformatics Basics', 
+		href: '/protocols/bioinformatics-basics',
+		description: 'Command line tools, pipelines, and computational workflows'
+	},
+	{ 
+		emoji: '📊', 
+		title: 'R Studio Guide', 
+		href: '/protocols/r-studio-guide',
+		description: 'Data analysis, visualization, and statistical methods in R'
+	},
+	{ 
+		emoji: '📚', 
+		title: 'Resources Hub', 
+		href: '/protocols/resources-hub',
+		description: 'Useful links, databases, and reference materials'
+	},
+];
 ---
 
 <!doctype html>
@@ -18,8 +51,14 @@ import { SITE_TITLE } from '../consts';
 				<p class="tagline">Laboratory methods and experimental workflows</p>
 			</section>
 
-			<section class="content">
-				<p>Protocols content coming soon.</p>
+			<section class="sections-grid">
+				{sections.map((section) => (
+					<a href={section.href} class="section-card">
+						<span class="section-emoji">{section.emoji}</span>
+						<h2 class="section-title">{section.title}</h2>
+						<p class="section-description">{section.description}</p>
+					</a>
+				))}
 			</section>
 		</main>
 		<Footer />
@@ -36,7 +75,7 @@ import { SITE_TITLE } from '../consts';
 		text-align: center;
 		padding: 2rem 0 1rem;
 		border-bottom: 2px solid var(--accent);
-		margin-bottom: 2rem;
+		margin-bottom: 2.5rem;
 	}
 
 	.hero h1 {
@@ -51,13 +90,61 @@ import { SITE_TITLE } from '../consts';
 		margin: 0;
 	}
 
-	.content {
-		padding: 1rem 0;
+	.sections-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1.5rem;
+		padding-bottom: 2rem;
 	}
 
-	.content p {
-		color: rgb(var(--gray-dark));
-		line-height: 1.8;
+	.section-card {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding: 2rem 1.5rem;
+		background: #fff;
+		border: 1px solid rgb(var(--gray-light));
+		border-radius: 16px;
+		box-shadow: 0 2px 12px rgba(var(--gray), 10%);
+		text-decoration: none;
+		transition: all 0.2s ease;
+	}
+
+	.section-card:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 8px 24px rgba(var(--gray), 20%);
+		border-color: var(--accent);
+	}
+
+	.section-emoji {
+		font-size: 3rem;
+		margin-bottom: 1rem;
+	}
+
+	.section-title {
+		font-size: 1.25rem;
+		font-weight: 600;
+		color: var(--accent-dark);
+		margin: 0 0 0.75rem;
+		text-align: center;
+	}
+
+	.section-card:hover .section-title {
+		color: var(--accent);
+	}
+
+	.section-description {
+		font-size: 0.9rem;
+		color: rgb(var(--gray));
+		text-align: center;
+		margin: 0;
+		line-height: 1.5;
+	}
+
+	@media (max-width: 700px) {
+		.sections-grid {
+			grid-template-columns: 1fr;
+		}
 	}
 
 	@media (max-width: 600px) {

@@ -4,10 +4,7 @@ A personal research portfolio and blog website for Dr. Anjali Rana, a researcher
 
 ## About the Website
 
-This website showcases:
-- **Research Focus**: Host-microbe interactions, genome assembly, and microbiome studies
-- **Blog**: Articles on molecular biology protocols, microbiome analysis workflows, R & bioinformatics guides, and PhD guidance
-- **Resources**: Educational content for students and researchers in bioinformatics
+This project is a high-performance, custom-built portfolio website designed for a prominent academic researcher and blogger. It features a statically generated Astro frontend paired with a Sanity headless CMS, allowing the client to easily publish blog posts and research papers. The site includes a dedicated CV section, an automated publication showcase, and an integrated, fee-free scheduling system that replaces third-party consultation platforms. Built for speed and SEO optimization, it provides the client with complete ownership over her digital identity and monetization infrastructure.
 
 ## Tech Stack
 

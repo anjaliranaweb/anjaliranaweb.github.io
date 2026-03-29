@@ -12,7 +12,7 @@ const navLinks = [
 <header>
 	<nav>
 		<a href="/" class="logo">
-			<span class="logo-icon">🧬</span>
+			<img src="/favicon.svg" alt="Logo" class="logo-icon" />
 			<span class="logo-text">Dr. Anjali Rana</span>
 		</a>
 		
@@ -20,7 +20,8 @@ const navLinks = [
 			{navLinks.map((link) => (
 				<HeaderLink href={link.href}>{link.label}</HeaderLink>
 			))}
-			<a href="/about" class="about-btn">About</a>
+			<HeaderLink href="/about">About</HeaderLink>
+			<a href="/consult" class="consult-btn">Consult</a>
 		</div>
 
 		<button class="hamburger" aria-label="Toggle menu" aria-expanded="false">
@@ -40,7 +41,8 @@ const navLinks = [
 			{navLinks.map((link) => (
 				<a href={link.href} class="mobile-link">{link.label}</a>
 			))}
-			<a href="/about" class="mobile-link about-link">About</a>
+			<a href="/about" class="mobile-link">About</a>
+			<a href="/consult" class="mobile-link consult-link">Consult</a>
 		</div>
 	</div>
 	<div class="mobile-overlay"></div>
@@ -121,7 +123,8 @@ const navLinks = [
 	}
 
 	.logo-icon {
-		font-size: 1.5rem;
+		width: 1.75rem;
+		height: 1.75rem;
 	}
 
 	.logo-text {
@@ -175,8 +178,8 @@ const navLinks = [
 		width: 60%;
 	}
 
-	/* About button - special styling */
-	.about-btn {
+	/* Consult button - special styling */
+	.consult-btn {
 		background: rgb(var(--gray-dark)) !important;
 		color: white !important;
 		padding: 0.5rem 1.25rem !important;
@@ -184,11 +187,11 @@ const navLinks = [
 		margin-left: 0.5rem;
 	}
 
-	.about-btn::after {
+	.consult-btn::after {
 		display: none !important;
 	}
 
-	.about-btn:hover {
+	.consult-btn:hover {
 		background: rgb(var(--black)) !important;
 		color: white !important;
 		transform: translateY(-1px);
@@ -286,14 +289,14 @@ const navLinks = [
 		border-left-color: var(--accent);
 	}
 
-	/* About link in mobile - special styling */
-	.mobile-link.about-link {
+	/* Consult link in mobile - special styling */
+	.mobile-link.consult-link {
 		background: rgba(13, 148, 136, 0.12);
 		border-left: 3px solid rgb(var(--gray-dark));
 		margin-top: 1rem;
 	}
 
-	.mobile-link.about-link:hover {
+	.mobile-link.consult-link:hover {
 		background: rgba(13, 148, 136, 0.2);
 		color: var(--accent);
 		border-left-color: var(--accent);
